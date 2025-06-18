@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goods List</title>
+
+    <style>
+        /* Стили для шапки */
+        header {
+            background-color: black;
+            padding: 20px;
+            color: white;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        /* Стили для кнопки корзины */
+        .cart-button {
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        /* Список товаров – контейнер */
+        .goods-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            padding: 20px;
+            justify-content: center;
+        }
+
+        .goods-item {
+            width: 200px;
+            height: 200px;
+            border: solid 2px #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Суммарная стоимость */
+        #total-price {
+            text-align: center;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <button class="cart-button" type="button">Корзина</button>
+    </header>
+
+    <div class="goods-list"></div>
+    <p id="total-price"></p>
+
+    <script>
+        // Класс одного товара
+        class GoodsItem {
+            constructor(title, price) {
+                this.title = title;
+                this.price = price;
+            }
+
+            // Метод для генерации HTML-разметки товара
+            render() {
+                return `<div class="goods-item"><h3>${this.title}</h3><p>${this.price}</p></div>`;
+            }
+        }
+
+        // Класс списка товаров
+        class GoodsList {
+            constructor() {
+                this.goods = [];
+            }
+
+            // Метод для загрузки списка товаров
+            fetchGoods() {
+                this.goods = [
+                    { title: 'Shirt', price: 150 },
+                    { title: 'Socks', price: 50 },
+                    { title: 'Jacket', price: 350 },
+                    { title: 'Shoes', price: 250 },
+                ];
+            }
+
+            // Метод отображения всех товаров
+            render() {
+                let listHtml = '';
+                this.goods.forEach(good => {
+                    const goodItem = new GoodsItem(good.title, good.price);
+                    listHtml += goodItem.render();
+                });
+                document.querySelector('.goods-list').innerHTML = listHtml;
+            }
+
+            // Метод для подсчета общей суммы всех товаров
+            getTotalPrice() {
+                let total = 0;
+                for (let i = 0; i < this.goods.length; i++) {
+                  total =  total + this.goods[i].price;
+                }
+                return total;
+            }
+        }
+
+        // Создание экземпляра списка товаров
+        const list = new GoodsList();
+        list.fetchGoods(); // Загрузка товаров
+        list.render();     // Отображение товаров на странице
+
+        // Отображение общей стоимости товаров на странице
+        const total = list.getTotalPrice();
+        document.getElementById('total-price').textContent = `Сумма всех товаров: ${total}Р`;
+    </script>
+</body>
+
+</html>

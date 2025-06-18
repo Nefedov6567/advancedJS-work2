@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Бургер калькулятор</title>
+</head>
+
+<body>
+    <h1>Калькулятор Бургера</h1>
+
+    <p>Размер:</p>
+    <input type="radio" name="size" value="small">маленький<br>
+    <input type="radio" name="size" value="big">большой<br>
+
+    <p>Начинка:</p>
+    <input type="radio" name="stuff" value="cheese">сыр<br>
+    <input type="radio" name="stuff" value="salad">салат<br>
+    <input type="radio" name="stuff" value="potato">картошка<br>
+
+    <p>Дополнительно:</p>
+    <input type="checkbox" name="add" value="spice">приправа<br>
+    <input type="checkbox" name="add" value="mayo">майонез<br><br>
+
+    <button onclick="calc()">Посчитать</button>
+
+    <p id="out"></p>
+
+    <script>
+        let sizes = {
+            small: { price: 50, cal: 20 },
+            big: { price: 100, cal: 40 }
+        }
+
+        let stuffs = {
+            cheese: { price: 10, cal: 20 },
+            salad: { price: 20, cal: 5 },
+            potato: { price: 15, cal: 10 }
+        }
+
+        let adds = {
+            spice: { price: 15, cal: 0 },
+            mayo: { price: 20, cal: 5 }
+        }
+        function calc() {
+            let price = 0
+            let cal = 0
+
+            if (document.getElementById("small").checked) {
+                price = price + sizes.small.price
+                cal = cal + sizes.small.cal
+            } else if (document.getElementById("big").checked) {
+                price = price + sizes.big.price
+                cal = cal + sizes.big.cal
+            }
+
+            if (document.getElementById("cheese").checked) {
+                price = price + stuffs.cheese.price
+                cal = cal + stuffs.cheese.cal
+            } else if (document.getElementById("salad").checked) {
+                price = price + stuffs.salad.price
+                cal = cal + stuffs.salad.cal
+            } else if (document.getElementById("potato").checked) {
+                price = price + stuffs.potato.price
+                cal = cal + stuffs.potato.cal
+            }
+
+            if (document.getElementById("spice").checked) {
+                price = price + adds.spice.price
+                cal = cal + adds.spice.cal
+            }
+
+            if (document.getElementById("mayo").checked) {
+                price = price + adds.mayo.price
+                cal = cal + adds.mayo.cal
+            }
+
+            document.getElementById("out").innerText = "Цена: " + price + " руб, Калории: " + cal
+        }
+
+    </script>
+</body>
+
+</html>
